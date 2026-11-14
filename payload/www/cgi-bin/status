@@ -1,0 +1,7 @@
+#!/bin/sh
+printf 'Content-Type: text/plain; charset=utf-8\r\nCache-Control: no-store\r\n\r\n'
+DIR=/root/lan-monitor-data
+printf '#SCAN\t'; cat "$DIR/last-scan" 2>/dev/null || printf '0\n'
+printf '#ERROR\t'; cat "$DIR/error" 2>/dev/null || printf '\n'
+printf '#DEVICES\n'; cat "$DIR/devices.tsv" 2>/dev/null || :
+printf '#EVENTS\n'; awk -F '\t' '$2=="rilevato" || $2=="non rilevato" {n++;a[n%30]=$0} END {start=n-29; if(start<1)start=1; for(i=start;i<=n;i++) if((i%30) in a) print a[i%30]}' "$DIR/events.tsv" 2>/dev/null || :

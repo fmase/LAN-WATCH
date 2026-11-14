@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+*.sqlite*
+*.tsv
+__pycache__/
+*.pyc
+
+# Local router backups must not be published.
+/backups/
+
+# Previous development screenshots.
+/assets/preview-compact.png
+/assets/preview-interval.png
